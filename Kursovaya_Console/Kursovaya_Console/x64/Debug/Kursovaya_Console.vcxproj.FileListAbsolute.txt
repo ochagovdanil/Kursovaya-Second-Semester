@@ -1,0 +1,3 @@
+D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\x64\Debug\Kursovaya_Console.vcxproj.AssemblyReference.cache
+D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\x64\Debug\Kursovaya_Console.vcxproj.SuggestedBindingRedirects.cache
+D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\x64\Debug\Kursovaya_Console.exe
