@@ -33,6 +33,8 @@ char dan[7][70] = {
        "Выход                                                          "
 };
 
+int NC = 0;
+
 int menu(int);
 void avrSuccessfulFlights(struct z*);
 void cheapestRocket(struct z*);
@@ -46,7 +48,7 @@ int main(array<System::String ^> ^args)
     // Some variables
     char BlankLine[80]; memset(BlankLine, ' ', 65); BlankLine[65] = 0;
     char filePath[90] = "D:\\University\\прога\\курсач\\Kursovaya_Console\\Kursovaya_Console\\SpaceCompanies.dat";
-    int NC, i, n;
+    int i, n;
     FILE* in;
     struct z* companies;
 
@@ -131,6 +133,7 @@ int main(array<System::String ^> ^args)
         printf(BlankLine);
 
         n = menu(7); // Select current item in menu
+
         switch (n)
         {
             case 1: avrSuccessfulFlights(companies); break;
@@ -189,30 +192,69 @@ int menu(int n)
 
 void avrSuccessfulFlights(struct z* company)
 {
+    int totalFlights = 0;
 
+    for (int i = 0; i < NC; i++)
+    {
+        totalFlights += company[i].successfulFlights;
+    }
+
+    float avrg = (float) totalFlights / NC;
+
+    Console::ForegroundColor = ConsoleColor::Yellow;
+    Console::BackgroundColor = ConsoleColor::Blue;
+    Console::CursorLeft = 25;
+    Console::CursorTop = 15;
+    printf("Среднее арифметическое успешных запусков: %.3f", avrg);
+
+    _getch();
 }
 
 void cheapestRocket(struct z* company)
 {
+    struct z cheapest = company[0];
+    int minPrice = cheapest.pricePerLaunch;
+    
+    for (int i = 1; i < NC; i++)
+    {
+        if (company[i].pricePerLaunch < minPrice)
+        {
+            cheapest = company[i];
+            minPrice = cheapest.pricePerLaunch;
+        }
+    }
 
+    Console::ForegroundColor = ConsoleColor::Yellow;
+    Console::BackgroundColor = ConsoleColor::Blue;
+    Console::CursorLeft = 25;
+    Console::CursorTop = 15;
+    printf("Самая дешевая ракета для запуска: %s", cheapest.rocketName);
+    Console::CursorLeft = 25;
+    Console::CursorTop = 16;
+    printf("Компания: %s", cheapest.companyName);
+    Console::CursorLeft = 25;
+    Console::CursorTop = 17;
+    printf("Стоимость запуска в миллионах $: %d", cheapest.pricePerLaunch);
+
+    _getch();
 }
 
 void successfulFlightsBiggerThan(struct z* company)
 {
-
+    _getch();
 }
 
 void costPerLaunchBiggerAndLessThan(struct z* company)
 {
-
+    _getch();
 }
 
 void alphabet(struct z* company)
 {
-
+    _getch();
 }
 
 void diagram(struct z* company)
 {
-
+    _getch();
 }
