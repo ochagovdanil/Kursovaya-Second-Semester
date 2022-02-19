@@ -85,8 +85,20 @@ int main(array<System::String ^> ^args)
             &companies[i].failureFlights);
 
     // Outputting the file
+    printf("\n%-20s %-20s %-15s %-15s %-15s", 
+        "Компания", 
+        "Ракета",
+        "Стоимость в M$", 
+        "Удачные пуски", 
+        "Неудачные пуски");
+
+    char separator[90];
+    memset(separator, '-', 89);
+    separator[89] = 0;
+    printf("\n%s", separator);
+
     for (i = 0; i < NC; i++)
-        printf("\n%-20s %-20s %-10d %-10d %-10d", 
+        printf("\n%-20s %-20s %-15d %-15d %-15d", 
             companies[i].companyName,
             companies[i].rocketName,
             companies[i].pricePerLaunch,
