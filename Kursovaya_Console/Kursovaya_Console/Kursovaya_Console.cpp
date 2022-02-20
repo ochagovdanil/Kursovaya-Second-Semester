@@ -27,7 +27,7 @@ char dan[7][70] = {
        "Среднее арифметическое успешных запусков?                      ",
        "Какая самая дешевая ракета для запуска?                        ",
        "Список ракет, у которых число удачных запусков больше X        ",
-       "Список ракет, запуск которых стоит больше XM$ и меньше XM$     ",
+       "Количество ракет, запуск которых стоит больше XM$ и меньше XM$ ",
        "Алфавитный список всех компаний                                ",
        "Диаграмма. Процентное соотношение всех запусков каждой компании",
        "Выход                                                          "
@@ -87,7 +87,9 @@ int main(array<System::String ^> ^args)
             &companies[i].failureFlights);
 
     // Outputting the file
-    printf("\n%-20s %-20s %-15s %-15s %-15s", 
+    Console::CursorTop = 6;
+    Console::CursorLeft = 15;
+    printf("%-20s %-20s %-15s %-15s %-15s", 
         "Компания", 
         "Ракета",
         "Стоимость в M$", 
@@ -97,15 +99,21 @@ int main(array<System::String ^> ^args)
     char separator[90];
     memset(separator, '-', 89);
     separator[89] = 0;
-    printf("\n%s", separator);
+    Console::CursorTop = 7;
+    Console::CursorLeft = 15;
+    printf("%s", separator);
 
     for (i = 0; i < NC; i++)
-        printf("\n%-20s %-20s %-15d %-15d %-15d", 
+    {
+        Console::CursorTop = 8 + i;
+        Console::CursorLeft = 15;
+        printf("%-20s %-20s %-15d %-15d %-15d",
             companies[i].companyName,
             companies[i].rocketName,
             companies[i].pricePerLaunch,
             companies[i].successfulFlights,
             companies[i].failureFlights);
+    }
 
     _getch();
 
@@ -241,11 +249,41 @@ void cheapestRocket(struct z* company)
 
 void successfulFlightsBiggerThan(struct z* company)
 {
+    int biggerThan;
+
+    Console::ForegroundColor = ConsoleColor::Yellow;
+    Console::BackgroundColor = ConsoleColor::Blue;
+    Console::CursorLeft = 25;
+    Console::CursorTop = 15;
+    printf("Список ракет, у которых число удачных полетов больше чем: ");
+    scanf("%d", &biggerThan);
+
     _getch();
 }
 
 void costPerLaunchBiggerAndLessThan(struct z* company)
 {
+    int minPrice, maxPrice, counter = 0;
+
+    Console::ForegroundColor = ConsoleColor::Yellow;
+    Console::BackgroundColor = ConsoleColor::Blue;
+    Console::CursorLeft = 25;
+    Console::CursorTop = 15;
+    printf("Цена запуска больше, чем: ");
+    scanf("%d", &minPrice);
+    Console::CursorLeft = 25;
+    Console::CursorTop = 16;
+    printf("Цена запуска меньше, чем: ");
+    scanf("%d", &maxPrice);
+    
+    for (int i = 0; i < NC; i++)
+        if (company[i].pricePerLaunch > minPrice && company[i].pricePerLaunch < maxPrice)
+            counter++;
+
+    Console::CursorLeft = 25;
+    Console::CursorTop = 17;
+    printf("Количество ракет, стоимость запуска которых больше чем %dM$ и меньше чем %dM$ = %d", minPrice, maxPrice, counter);
+
     _getch();
 }
 
