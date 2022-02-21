@@ -10,6 +10,10 @@
 #define ESC 27
 #define UP 72
 #define DOWN 80
+#define PAGEUP 73
+#define PAGEDOWN 81
+#define HOME 71
+#define END 79
 
 using namespace std;
 using namespace System;
@@ -165,7 +169,11 @@ int menu(int n)
     {
         switch (c)
         {
+            case HOME: y2 = y1;  y1 = 0; break;
+            case END: y2 = y1;  y1 = n - 1; break;
+            case PAGEDOWN:
             case DOWN:y2 = y1; y1++; break;
+            case PAGEUP:
             case UP: y2 = y1; y1--; break;
             case ENTER: return y1 + 1;
         }
