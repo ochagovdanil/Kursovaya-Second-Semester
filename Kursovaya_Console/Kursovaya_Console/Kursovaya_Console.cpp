@@ -258,6 +258,7 @@ void cheapestRocket(struct z* company)
 void successfulFlightsBiggerThan(struct z* company)
 {
     int biggerThan;
+    int counter = 0;
 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
@@ -265,6 +266,21 @@ void successfulFlightsBiggerThan(struct z* company)
     Console::CursorTop = 15;
     printf("Список ракет, у которых число удачных полетов больше чем: ");
     scanf("%d", &biggerThan);
+
+    for (int i = 0; i < NC; i++)
+    {
+        if (company[i].successfulFlights > biggerThan)
+        {
+            counter++;
+            Console::CursorLeft = 25;
+            Console::CursorTop = 15 + counter;
+            printf(company[i].rocketName);
+        }
+    }
+
+    Console::CursorLeft = 25;
+    Console::CursorTop = 15 + counter + 1;
+    printf("Всего: %d", counter);
 
     _getch();
 }
