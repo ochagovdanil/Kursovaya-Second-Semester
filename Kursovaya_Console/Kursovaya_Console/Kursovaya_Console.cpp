@@ -27,14 +27,20 @@ struct z {
     int failureFlights;
 };
 
+struct sp {
+    char companyName[20];
+    int successfulFlights;
+    struct sp* sled;
+} *spisok;
+
 char dan[7][70] = {
-       "Среднее арифметическое успешных запусков?                      ",
-       "Какая самая дешевая ракета для запуска?                        ",
-       "Список ракет, у которых число удачных запусков больше X        ",
-       "Количество ракет, запуск которых стоит больше XM$ и меньше XM$ ",
-       "Алфавитный список всех компаний                                ",
-       "Диаграмма. Процентное соотношение всех запусков каждой компании",
-       "Выход                                                          "
+        "Среднее арифметическое успешных запусков?                      ",
+        "Какая самая дешевая ракета для запуска?                        ",
+        "Список ракет, у которых число удачных запусков больше X        ",
+        "Есть ли одинаковая цена запуска у разных компаний?             ",
+        "Алфавитный список всех компаний                                ",
+        "Диаграмма. Процентное соотношение всех запусков каждой компании",
+        "Выход                                                          "
 };
 
 int NC = 0;
@@ -43,8 +49,9 @@ int menu(int);
 void avrSuccessfulFlights(struct z*);
 void cheapestRocket(struct z*);
 void successfulFlightsBiggerThan(struct z*);
-void costPerLaunchBiggerAndLessThan(struct z*);
+void samePrice(struct z*);
 void alphabet(struct z*);
+void vstavka(struct z*, char*);
 void diagram(struct z*);
 
 int main(array<System::String ^> ^args)
@@ -151,7 +158,7 @@ int main(array<System::String ^> ^args)
             case 1: avrSuccessfulFlights(companies); break;
             case 2: cheapestRocket(companies); break;
             case 3: successfulFlightsBiggerThan(companies); break;
-            case 4: costPerLaunchBiggerAndLessThan(companies); break;
+            case 4: samePrice(companies); break;
             case 5: alphabet(companies); break;
             case 6: diagram(companies); break;
             case 7: exit(0);
@@ -165,6 +172,7 @@ int menu(int n)
 {
     int y1 = 0, y2 = n - 1;
     char c = 1;
+
     while (c != ESC)
     {
         switch (c)
@@ -172,7 +180,7 @@ int menu(int n)
             case HOME: y2 = y1;  y1 = 0; break;
             case END: y2 = y1;  y1 = n - 1; break;
             case PAGEDOWN:
-            case DOWN:y2 = y1; y1++; break;
+            case DOWN: y2 = y1; y1++; break;
             case PAGEUP:
             case UP: y2 = y1; y1--; break;
             case ENTER: return y1 + 1;
@@ -285,35 +293,80 @@ void successfulFlightsBiggerThan(struct z* company)
     _getch();
 }
 
-void costPerLaunchBiggerAndLessThan(struct z* company)
+void samePrice(struct z* company)
 {
-    int minPrice, maxPrice, counter = 0;
+    bool isSamePrice = false;
 
-    Console::ForegroundColor = ConsoleColor::Yellow;
-    Console::BackgroundColor = ConsoleColor::Blue;
-    Console::CursorLeft = 25;
-    Console::CursorTop = 15;
-    printf("Цена запуска больше, чем: ");
-    scanf("%d", &minPrice);
-    Console::CursorLeft = 25;
-    Console::CursorTop = 16;
-    printf("Цена запуска меньше, чем: ");
-    scanf("%d", &maxPrice);
-    
     for (int i = 0; i < NC; i++)
-        if (company[i].pricePerLaunch > minPrice && company[i].pricePerLaunch < maxPrice)
-            counter++;
+    {
+        for (int j = i + 1; j < NC; j++)
+        {
+            if (company[i].pricePerLaunch == company[j].pricePerLaunch) {
+                isSamePrice = true;
+                Console::CursorLeft = 25;
+                Console::CursorTop = 15;
+                printf("Совпадения есть!");
+                Console::CursorLeft = 25;
+                Console::CursorTop = 16;
+                printf("%s (%dM$) = %s (%dM$)", company[i].rocketName, company[i].pricePerLaunch, company[j].rocketName, company[j].pricePerLaunch);
+                break;
+            }
+        }
+        if (isSamePrice) 
+            break;
+    }
 
-    Console::CursorLeft = 25;
-    Console::CursorTop = 17;
-    printf("Количество ракет, стоимость запуска которых больше чем %dM$ и меньше чем %dM$ = %d", minPrice, maxPrice, counter);
+    if (!isSamePrice)
+    {
+        Console::CursorLeft = 25;
+        Console::CursorTop = 15;
+        printf("Совпадений нет!");
+    }
 
     _getch();
 }
 
 void alphabet(struct z* company)
 {
+    struct sp* nt;
+    Console::ForegroundColor = ConsoleColor::Yellow;
+    Console::BackgroundColor = ConsoleColor::Red;
+    Console::Clear();
+
+    if (!spisok)
+        for (int i = 0; i < NC; i++)
+            vstavka(company, company[i].companyName);
+
+    Console::Clear();
+    printf("\nАлфавитный список");
+    printf("\n====================================\n");
+
+    for (nt = spisok; nt != 0; nt = nt->sled)
+        printf("\n%-20s %d", nt->companyName, nt->successfulFlights);
+
     _getch();
+}
+
+void vstakva(struct z* company, char* companyName)
+{
+    struct sp* nov, * nt, * z = 0;
+
+    for (nt = spisok; nt != 0 && strcmp(nt->companyName, companyName) < 0; z = nt, nt = nt->sled);
+
+    if (nt && strcmp(nt->companyName, companyName) == 0) return;
+
+    nov = (struct sp*)malloc(sizeof(struct sp));
+    strcpy(nov->companyName, companyName);
+    nov->sled = nt;
+    nov->successfulFlights = 0;
+
+    for (int i = 0; i < NC; i++)
+        if (strcmp(company[i].companyName, companyName) == 0)
+            nov->successfulFlights += company[i].successfulFlights;
+
+    if (!z) spisok = nov;
+    else z->sled = nov;
+    return;
 }
 
 void diagram(struct z* company)
