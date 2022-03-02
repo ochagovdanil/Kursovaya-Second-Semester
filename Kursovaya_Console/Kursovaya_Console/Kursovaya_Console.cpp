@@ -347,9 +347,9 @@ void alphabet(struct z* company)
     _getch();
 }
 
-void vstakva(struct z* company, char* companyName)
+void vstavka(struct z* company, char* companyName)
 {
-    struct sp* nov, * nt, * z = 0;
+    struct sp* nov, *nt, *z = 0;
 
     for (nt = spisok; nt != 0 && strcmp(nt->companyName, companyName) < 0; z = nt, nt = nt->sled);
 
@@ -366,7 +366,7 @@ void vstakva(struct z* company, char* companyName)
 
     if (!z) spisok = nov;
     else z->sled = nov;
-    return;
+    return; 
 }
 
 void diagram(struct z* company)

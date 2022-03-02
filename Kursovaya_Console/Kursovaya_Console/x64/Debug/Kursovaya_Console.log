@@ -1,5 +1,3 @@
 ﻿  Kursovaya_Console.cpp
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-Kursovaya_Console.obj : error LNK2028: unresolved token (0A000075) "void __cdecl vstavka(struct z *,char *)" (?vstavka@@$$FYAXPEAUz@@PEAD@Z) referenced in function "void __cdecl alphabet(struct z *)" (?alphabet@@$$FYAXPEAUz@@@Z)
-Kursovaya_Console.obj : error LNK2019: unresolved external symbol "void __cdecl vstavka(struct z *,char *)" (?vstavka@@$$FYAXPEAUz@@PEAD@Z) referenced in function "void __cdecl alphabet(struct z *)" (?alphabet@@$$FYAXPEAUz@@@Z)
-D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\x64\Debug\Kursovaya_Console.exe : fatal error LNK1120: 2 unresolved externals
+  Kursovaya_Console.vcxproj -> D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\x64\Debug\Kursovaya_Console.exe
