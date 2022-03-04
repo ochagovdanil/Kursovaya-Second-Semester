@@ -31,6 +31,7 @@ struct sp {
     char companyName[20];
     int successfulFlights;
     struct sp* sled;
+    struct sp* pred;
 } *spisok;
 
 char dan[7][70] = {
@@ -328,28 +329,58 @@ void samePrice(struct z* company)
 
 void alphabet(struct z* company)
 {
-    struct sp* nt;
+    int i = 0;
+    struct sp *nt, *z;
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Red;
     Console::Clear();
 
+    // Sort the list if it's not sorted yet
     if (!spisok)
         for (int i = 0; i < NC; i++)
             vstavka(company, company[i].companyName);
-
     Console::Clear();
-    printf("\nАлфавитный список");
-    printf("\n====================================\n");
+
+    // Output ASC order
+    Console::CursorLeft = 5;
+    Console::CursorTop = 10;
+    printf("Алфавитный список А->Я");
+    Console::CursorLeft = 5;
+    Console::CursorTop = 11;
+    printf("----------------------------");
 
     for (nt = spisok; nt != 0; nt = nt->sled)
-        printf("\n%-20s %d", nt->companyName, nt->successfulFlights);
+    {
+        Console::CursorLeft = 5;
+        Console::CursorTop = 12 + i;
+        i++;
+        printf("%-20s %-10d", nt->companyName, nt->successfulFlights);
+    }
+
+    // Output DEC order
+    i = 0;
+    Console::CursorLeft = 60;
+    Console::CursorTop = 10;
+    printf("Алфавитный список Я->А");
+    Console::CursorLeft = 60;
+    Console::CursorTop = 11;
+    printf("----------------------------");
+
+    for (z = 0, nt = spisok; nt != 0; z = nt, nt = nt->sled);
+    for (nt = z; nt != 0; nt = nt->pred) 
+    {
+        Console::CursorLeft = 60;
+        Console::CursorTop = 12 + i;
+        i++;
+        printf("%-20s %-10d", nt->companyName, nt->successfulFlights);
+    }
 
     _getch();
 }
 
 void vstavka(struct z* company, char* companyName)
 {
-    struct sp* nov, *nt, *z = 0;
+    struct sp *nov, *nt, *z = 0;
 
     for (nt = spisok; nt != 0 && strcmp(nt->companyName, companyName) < 0; z = nt, nt = nt->sled);
 
@@ -358,14 +389,16 @@ void vstavka(struct z* company, char* companyName)
     nov = (struct sp*)malloc(sizeof(struct sp));
     strcpy(nov->companyName, companyName);
     nov->sled = nt;
+    nov->pred = z;
     nov->successfulFlights = 0;
 
     for (int i = 0; i < NC; i++)
         if (strcmp(company[i].companyName, companyName) == 0)
             nov->successfulFlights += company[i].successfulFlights;
-
+    
     if (!z) spisok = nov;
     else z->sled = nov;
+    if (nt) nt->pred = nov;
     return; 
 }
 
