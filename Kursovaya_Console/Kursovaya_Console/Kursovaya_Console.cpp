@@ -57,7 +57,6 @@ void diagram(struct z*);
 
 int main(array<System::String ^> ^args)
 {
-    // Some variables
     char BlankLine[80]; memset(BlankLine, ' ', 65); BlankLine[65] = 0;
     char filePath[90] = "D:\\University\\прога\\курсач\\Kursovaya_Console\\Kursovaya_Console\\SpaceCompanies.dat";
     int i, n;
@@ -298,6 +297,9 @@ void samePrice(struct z* company)
 {
     bool isSamePrice = false;
 
+    Console::ForegroundColor = ConsoleColor::Yellow;
+    Console::BackgroundColor = ConsoleColor::Blue;
+
     for (int i = 0; i < NC; i++)
     {
         for (int j = i + 1; j < NC; j++)
@@ -331,14 +333,15 @@ void alphabet(struct z* company)
 {
     int i = 0;
     struct sp *nt, *z;
-    Console::ForegroundColor = ConsoleColor::Yellow;
-    Console::BackgroundColor = ConsoleColor::Red;
+    Console::ForegroundColor = ConsoleColor::White;
+    Console::BackgroundColor = ConsoleColor::Blue;
     Console::Clear();
 
     // Sort the list if it's not sorted yet
     if (!spisok)
         for (int i = 0; i < NC; i++)
             vstavka(company, company[i].companyName);
+
     Console::Clear();
 
     // Output ASC order
@@ -375,7 +378,7 @@ void alphabet(struct z* company)
         printf("%-20s %-10d", nt->companyName, nt->successfulFlights);
     }
 
-    _getch();
+    _getch();  
 }
 
 void vstavka(struct z* company, char* companyName)
@@ -404,5 +407,64 @@ void vstavka(struct z* company, char* companyName)
 
 void diagram(struct z* company)
 {
+    struct sp *nt;
+    int len, i, NColor;
+    long flights = 0;
+    char str1[20];
+    char str2[20];
+
+    for (i = 0; i < NC; i++)
+        flights = flights + company[i].successfulFlights;
+
+    System::ConsoleColor Color;
+    Console::ForegroundColor = ConsoleColor::White;
+    Console::BackgroundColor = ConsoleColor::Blue;
+    Console::Clear();
+    Color = ConsoleColor::Black;
+    NColor = 0;
+
+    // Sort the list if it's not sorted yet
+    if (!spisok)
+        for (i = 0; i < NC; i++)
+            vstavka(company, company[i].companyName);
+
+    Console::ForegroundColor = ConsoleColor::White;
+    Console::BackgroundColor = ConsoleColor::Blue;
+    Console::CursorLeft = 5;
+    Console::CursorTop = 10;
+    printf("Компания");
+    Console::CursorLeft = 25;
+    Console::CursorTop = 10;
+    printf("Соотношение удачных полетов в %%");
+
+    // Draw the diagram
+    for (nt = spisok, i = 0; nt != 0; nt = nt->sled, i++)
+    {
+        sprintf(str1, "%s", nt->companyName);
+        sprintf(str2, "%3.1f%%", (nt->successfulFlights * 100. / flights));
+
+        Console::ForegroundColor = ConsoleColor::White;
+        Console::BackgroundColor = ConsoleColor::Blue;
+        Console::CursorLeft = 5;
+        Console::CursorTop = 11 + i;
+        printf(str1);
+        Console::CursorLeft = 25;
+        printf(str2);
+
+        Console::BackgroundColor = ++Color;
+        NColor++;
+        Console::CursorLeft = 35;
+
+        for (len = 0; len < nt->successfulFlights * 100 / flights; len++)
+            printf(" ");
+        
+        if (NColor == 14)
+        {
+            Color = ConsoleColor::Black;
+            NColor = 0;
+        }
+    }
+
     _getch();
+    return;
 }
