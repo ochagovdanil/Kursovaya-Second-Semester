@@ -98,27 +98,27 @@ int main(array<System::String ^> ^args)
             &companies[i].failureFlights);
 
     // Outputting the file
-    Console::CursorTop = 6;
-    Console::CursorLeft = 15;
-    printf("%-20s %-20s %-15s %-15s %-15s", 
+    Console::CursorTop = 8;
+    Console::CursorLeft = 20;
+    printf(" %-20s %-20s %-15s %-15s %-15s ", 
         "Компания", 
         "Ракета",
         "Стоимость в M$", 
         "Удачные пуски", 
         "Неудачные пуски");
 
-    char separator[90];
-    memset(separator, '-', 89);
-    separator[89] = 0;
-    Console::CursorTop = 7;
-    Console::CursorLeft = 15;
+    char separator[95];
+    memset(separator, '-', 91);
+    separator[91] = 0;
+    Console::CursorTop = 9;
+    Console::CursorLeft = 20;
     printf("%s", separator);
 
     for (i = 0; i < NC; i++)
     {
-        Console::CursorTop = 8 + i;
-        Console::CursorLeft = 15;
-        printf("%-20s %-20s %-15d %-15d %-15d",
+        Console::CursorTop = 10 + i;
+        Console::CursorLeft = 20;
+        printf(" %-20s %-20s %-15d %-15d %-15d ",
             companies[i].companyName,
             companies[i].rocketName,
             companies[i].pricePerLaunch,
@@ -136,19 +136,19 @@ int main(array<System::String ^> ^args)
         Console::Clear();
         Console::ForegroundColor = ConsoleColor::Yellow;
         Console::BackgroundColor = ConsoleColor::Red;
-        Console::CursorLeft = 25;
-        Console::CursorTop = 4;
+        Console::CursorLeft = 35;
+        Console::CursorTop = 6;
         printf(BlankLine);
 
         for (i = 0; i < 7; i++)
         {
-            Console::CursorLeft = 25;
-            Console::CursorTop = i + 5;
+            Console::CursorLeft = 35;
+            Console::CursorTop = i + 7;
             printf(" %s ", dan[i]);
         }
 
-        Console::CursorLeft = 25;
-        Console::CursorTop = 12;
+        Console::CursorLeft = 35;
+        Console::CursorTop = 14;
         printf(BlankLine);
 
         n = menu(7); // Select current item in menu
@@ -199,14 +199,14 @@ int menu(int n)
 
         Console::ForegroundColor = ConsoleColor::White;
         Console::BackgroundColor = ConsoleColor::Green;
-        Console::CursorLeft = 25;
-        Console::CursorTop = y1 + 5;
+        Console::CursorLeft = 35;
+        Console::CursorTop = y1 + 7;
         printf(" %s ", dan[y1]);
 
         Console::ForegroundColor = ConsoleColor::Yellow;
         Console::BackgroundColor = ConsoleColor::Red;
-        Console::CursorLeft = 25;
-        Console::CursorTop = y2 + 5;
+        Console::CursorLeft = 35;
+        Console::CursorTop = y2 + 7;
         printf(" %s ", dan[y2]);
         c = _getch();
     }
@@ -227,8 +227,8 @@ void avrSuccessfulFlights(struct z* company)
 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
-    Console::CursorLeft = 25;
-    Console::CursorTop = 15;
+    Console::CursorLeft = 35;
+    Console::CursorTop = 20;
     printf("Среднее арифметическое успешных запусков: %.3f", avrg);
 
     _getch();
@@ -250,14 +250,14 @@ void cheapestRocket(struct z* company)
 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
-    Console::CursorLeft = 25;
-    Console::CursorTop = 15;
+    Console::CursorLeft = 35;
+    Console::CursorTop = 20;
     printf("Самая дешевая ракета для запуска: %s", cheapest.rocketName);
-    Console::CursorLeft = 25;
-    Console::CursorTop = 16;
+    Console::CursorLeft = 35;
+    Console::CursorTop = 21;
     printf("Компания: %s", cheapest.companyName);
-    Console::CursorLeft = 25;
-    Console::CursorTop = 17;
+    Console::CursorLeft = 35;
+    Console::CursorTop = 22;
     printf("Стоимость запуска в миллионах $: %d", cheapest.pricePerLaunch);
 
     _getch();
@@ -270,8 +270,8 @@ void successfulFlightsBiggerThan(struct z* company)
 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
-    Console::CursorLeft = 25;
-    Console::CursorTop = 15;
+    Console::CursorLeft = 35;
+    Console::CursorTop = 20;
     printf("Список ракет, у которых число удачных полетов больше чем: ");
     scanf("%d", &biggerThan);
 
@@ -280,14 +280,14 @@ void successfulFlightsBiggerThan(struct z* company)
         if (company[i].successfulFlights > biggerThan)
         {
             counter++;
-            Console::CursorLeft = 25;
-            Console::CursorTop = 15 + counter;
+            Console::CursorLeft = 35;
+            Console::CursorTop = 20 + counter;
             printf(company[i].rocketName);
         }
     }
 
-    Console::CursorLeft = 25;
-    Console::CursorTop = 15 + counter + 1;
+    Console::CursorLeft = 35;
+    Console::CursorTop = 21 + counter;
     printf("Всего: %d", counter);
 
     _getch();
@@ -306,11 +306,11 @@ void samePrice(struct z* company)
         {
             if (company[i].pricePerLaunch == company[j].pricePerLaunch) {
                 isSamePrice = true;
-                Console::CursorLeft = 25;
-                Console::CursorTop = 15;
+                Console::CursorLeft = 35;
+                Console::CursorTop = 20;
                 printf("Совпадения есть!");
-                Console::CursorLeft = 25;
-                Console::CursorTop = 16;
+                Console::CursorLeft = 35;
+                Console::CursorTop = 21;
                 printf("%s (%dM$) = %s (%dM$)", company[i].rocketName, company[i].pricePerLaunch, company[j].rocketName, company[j].pricePerLaunch);
                 break;
             }
@@ -321,8 +321,8 @@ void samePrice(struct z* company)
 
     if (!isSamePrice)
     {
-        Console::CursorLeft = 25;
-        Console::CursorTop = 15;
+        Console::CursorLeft = 35;
+        Console::CursorTop = 20;
         printf("Совпадений нет!");
     }
 
@@ -362,17 +362,17 @@ void alphabet(struct z* company)
 
     // Output DEC order
     i = 0;
-    Console::CursorLeft = 60;
+    Console::CursorLeft = 100;
     Console::CursorTop = 10;
     printf("Алфавитный список Я->А");
-    Console::CursorLeft = 60;
+    Console::CursorLeft = 100;
     Console::CursorTop = 11;
     printf("----------------------------");
 
     for (z = 0, nt = spisok; nt != 0; z = nt, nt = nt->sled);
     for (nt = z; nt != 0; nt = nt->pred) 
     {
-        Console::CursorLeft = 60;
+        Console::CursorLeft = 100;
         Console::CursorTop = 12 + i;
         i++;
         printf("%-20s %-10d", nt->companyName, nt->successfulFlights);
@@ -410,8 +410,6 @@ void diagram(struct z* company)
     struct sp *nt;
     int len, i, NColor;
     long flights = 0;
-    char str1[20];
-    char str2[20];
 
     for (i = 0; i < NC; i++)
         flights = flights + company[i].successfulFlights;
@@ -438,24 +436,25 @@ void diagram(struct z* company)
     printf("Соотношение удачных полетов в %%");
 
     // Draw the diagram
-    for (nt = spisok, i = 0; nt != 0; nt = nt->sled, i++)
+    for (nt = spisok, i = 0; nt != 0; nt = nt->sled, i+=2)
     {
-        sprintf(str1, "%s", nt->companyName);
-        sprintf(str2, "%3.1f%%", (nt->successfulFlights * 100. / flights));
-
         Console::ForegroundColor = ConsoleColor::White;
         Console::BackgroundColor = ConsoleColor::Blue;
         Console::CursorLeft = 5;
-        Console::CursorTop = 11 + i;
-        printf(str1);
+        Console::CursorTop = 12 + i;
+        printf(nt->companyName);
         Console::CursorLeft = 25;
-        printf(str2);
+        printf("%3.1f%%", (nt->successfulFlights * 100. / flights));
 
         Console::BackgroundColor = ++Color;
         NColor++;
         Console::CursorLeft = 35;
 
-        for (len = 0; len < nt->successfulFlights * 100 / flights; len++)
+        for (len = 0; len < (nt->successfulFlights * 100 / flights); len++)
+            printf(" ");
+
+        Console::BackgroundColor = ConsoleColor::White;
+        for (len + 1; len < 100; len++)
             printf(" ");
         
         if (NColor == 14)

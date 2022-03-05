@@ -1,3 +1,4 @@
 ﻿  Kursovaya_Console.cpp
+D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\Kursovaya_Console.cpp(457,18): warning C4552: '+': result of expression not used
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   Kursovaya_Console.vcxproj -> D:\University\прога\курсач\Kursovaya_Console\Kursovaya_Console\x64\Debug\Kursovaya_Console.exe
