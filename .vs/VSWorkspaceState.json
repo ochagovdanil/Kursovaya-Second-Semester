@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Kursovaya_Console",
-    "\\Kursovaya_Console\\Kursovaya_Console"
+    "\\Kursovaya_Console\\Kursovaya_Console",
+    "\\Kursovaya_GUI",
+    "\\Kursovaya_GUI\\Kursovaya_GUI"
   ],
   "SelectedNode": "\\Kursovaya_Console\\Kursovaya_Console\\Kursovaya_Console.cpp",
   "PreviewInSolutionExplorer": false

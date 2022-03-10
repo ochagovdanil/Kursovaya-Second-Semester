@@ -1,0 +1,5 @@
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\x64\Debug\Kursovaya_GUI.vcxproj.AssemblyReference.cache
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\x64\Debug\Kursovaya_GUI.vcxproj.SuggestedBindingRedirects.cache
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\x64\Debug\Kursovaya_GUI.exe
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\x64\Debug\KursovayaGUI.MyForm.resources
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\x64\Debug\Kursovaya_GUI.vcxproj.GenerateResource.cache
