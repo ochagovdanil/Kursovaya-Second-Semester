@@ -91,7 +91,7 @@ namespace KursovayaGUI {
 	private: System::Windows::Forms::ToolStripMenuItem^ выходToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ среднеејрифметическое”спешных«апусковToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ размах–€да÷еныToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ естьЋиќдинакова€÷ена«апуска”–азных омпанийToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ алфавитный—писок¬сех омпанийToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem;
@@ -123,7 +123,7 @@ namespace KursovayaGUI {
 			this->вопросыToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->среднеејрифметическое”спешных«апусковToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->размах–€да÷еныToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->естьЋиќдинакова€÷ена«апуска”–азных омпанийToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->алфавитный—писок¬сех омпанийToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -180,7 +180,7 @@ namespace KursovayaGUI {
 			// 
 			this->вопросыToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
 				this->среднеејрифметическое”спешных«апусковToolStripMenuItem,
-					this->кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem, this->список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem,
+					this->кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem, this->размах–€да÷еныToolStripMenuItem,
 					this->естьЋиќдинакова€÷ена«апуска”–азных омпанийToolStripMenuItem, this->алфавитный—писок¬сех омпанийToolStripMenuItem, this->диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem
 			});
 			this->вопросыToolStripMenuItem->Enabled = false;
@@ -202,12 +202,12 @@ namespace KursovayaGUI {
 			this->кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem->Text = L" ака€ сама€ дешева€ ракета дл€ запуска\? ";
 			this->кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::кака€—ама€ƒешева€–акетаƒл€«апускаToolStripMenuItem_Click);
 			// 
-			// список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem
+			// размах–€да÷еныToolStripMenuItem
 			// 
-			this->список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem->Name = L"список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem";
-			this->список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem->Size = System::Drawing::Size(472, 22);
-			this->список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem->Text = L"—писок ракет, у которых число удачных запусков больше X";
-			this->список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem_Click);
+			this->размах–€да÷еныToolStripMenuItem->Name = L"список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem";
+			this->размах–€да÷еныToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->размах–€да÷еныToolStripMenuItem->Text = L"–азмах р€да цены";
+			this->размах–€да÷еныToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::размах–€да÷еныToolStripMenuItem_Click);
 			// 
 			// естьЋиќдинакова€÷ена«апуска”–азных омпанийToolStripMenuItem
 			// 
@@ -228,6 +228,7 @@ namespace KursovayaGUI {
 			this->диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem->Name = L"диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem";
 			this->диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem->Size = System::Drawing::Size(472, 22);
 			this->диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem->Text = L"ƒиаграмма. ѕроцентное соотношение всех запусков каждой компании";
+			this->диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem_Click);
 			// 
 			// выходToolStripMenuItem
 			// 
@@ -300,6 +301,8 @@ namespace KursovayaGUI {
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"ƒиаграмма";
 			this->tabPage3->UseVisualStyleBackColor = true;
+			this->tabPage3->Click += gcnew System::EventHandler(this, &MyForm::tabPage3_Click);
+			this->tabPage3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::tabPage3_Paint);
 			// 
 			// MyForm
 			// 
@@ -452,8 +455,25 @@ private: System::Void естьЋиќдинакова€÷ена«апуска”–азных омпанийToolStripMenuIte
 	if (!isSamePrice)
 		MessageBox::Show("—овпадений нет!");
 }
-private: System::Void список–акет” оторых„исло”дачных«апусковЅольшеXToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	
+private: System::Void размах–€да÷еныToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	int minPrice = companies[0].pricePerLaunch;
+	int maxPrice = minPrice;
+	String^ s;
+	char ss[20];
+
+	for (int i = 1; i < NC; i++)
+	{
+		if (companies[i].pricePerLaunch < minPrice)
+			minPrice = companies[i].pricePerLaunch;
+
+		if (companies[i].pricePerLaunch > maxPrice)
+			maxPrice = companies[i].pricePerLaunch;
+	}
+
+	sprintf(ss, "%d", (maxPrice - minPrice));
+	s = gcnew String(ss);
+
+	MessageBox::Show(s, "–азмах р€да цены в миллионах $");
 }
 private: System::Void алфавитный—писок¬сех омпанийToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	int i = 0;
@@ -479,7 +499,7 @@ private: System::Void алфавитный—писок¬сех омпанийToolStripMenuItem_Click(System
 		richTextBox1->Text = richTextBox1->Text + "\n" + s;
 	}
 
-	richTextBox1->Text = richTextBox1->Text + "\n\nјлфавитный список я->ј";
+	richTextBox1->Text = richTextBox1->Text + "\n\n\nјлфавитный список я->ј";
 	richTextBox1->Text = richTextBox1->Text + "\n----------------------------";
 
 	for (z = 0, nt = spisok; nt != 0; z = nt, nt = nt->sled);
@@ -491,6 +511,62 @@ private: System::Void алфавитный—писок¬сех омпанийToolStripMenuItem_Click(System
 	}
 }
 private: System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void диаграммаѕроцентное—оотношение¬сех«апусков аждой омпанииToolStripMenuItem_Click(System::Object^ sender,
+	System::EventArgs^ e) {
+	tabControl1->SelectTab(2);
+}
+private: System::Void tabPage3_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void tabPage3_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+	Pen^ myPen = gcnew Pen(System::Drawing::Color::Black, 3);
+	SolidBrush^ myBrush = gcnew SolidBrush(Color::FromArgb(196, 0, 0, 0));
+	System::Drawing::Font^ myFont = gcnew System::Drawing::Font("Courier New Regular", 10);
+
+	int i, K = 0;
+	int iRed, iGreen, iBlue;
+	int aStart, aEnd;
+	long flights = 0;
+	float xPos, yPos;
+	struct sp* nt;
+
+	Graphics^ g = tabPage3->CreateGraphics();
+	g->Clear(System::Drawing::Color::Silver);
+
+	if (!spisok)
+		for (i = 0; i < NC; i++)
+			vstavka(companies, companies[i].companyName);
+
+	for (nt = spisok; nt != 0; nt = nt->sled)
+	{
+		K++;
+		flights += nt->successfulFlights;
+	}
+
+	g->DrawEllipse(myPen, 25, 25, 185, 185);
+	aEnd = 0;
+
+	for (nt = spisok, i = 0; nt != 0; nt = nt->sled, i++)
+	{
+		iRed = (((i + 1) & 4) > 0) * 255 / (i / 8 + 1);
+		iGreen = (((i + 1) & 2) > 0) * 255 / (i / 8 + 1);
+		iBlue = (((i + 1) & 1) > 0) * 255 / (i / 8 + 1);
+		aStart = aEnd;
+		aEnd += nt->successfulFlights * 360 / flights;
+		if (i == K - 1)
+			aEnd = 360;
+
+		myBrush->Color::set(Color::FromArgb(196, iRed, iGreen, iBlue));
+		g->FillPie(myBrush, 25, 25, 185, 185, aStart, aEnd - aStart);
+		g->FillRectangle(myBrush, 300, 50 + (i - 1) * 20, 20, 20);
+
+		myBrush->Color::set(Color::FromArgb(196, 0, 0, 0));
+		xPos = 30 + (185 - 25) / 2 + (185 - 25) / 1.5 * Math::Cos(Math::PI * (aStart + aEnd) / 360);
+		yPos = 30 + (185 - 25) / 2 + (185 - 25) / 1.5 * Math::Sin(Math::PI * (aStart + aEnd) / 360);
+
+		g->DrawString(gcnew String(nt->companyName), myFont, myBrush, 320, 55 + (i - 1) * 20);
+		g->DrawString(Convert::ToString(nt->successfulFlights * 100 / flights) + "%", myFont, myBrush, xPos, yPos);
+	}
 }
 };
 }

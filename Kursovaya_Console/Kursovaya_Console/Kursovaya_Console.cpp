@@ -37,7 +37,7 @@ struct sp {
 char dan[7][70] = {
         "Среднее арифметическое успешных запусков?                      ",
         "Какая самая дешевая ракета для запуска?                        ",
-        "Список ракет, у которых число удачных запусков больше X        ",
+        "Размах ряда цены?                                              ",
         "Есть ли одинаковая цена запуска у разных компаний?             ",
         "Алфавитный список всех компаний                                ",
         "Диаграмма. Процентное соотношение всех запусков каждой компании",
@@ -49,7 +49,7 @@ int NC = 0;
 int menu(int);
 void avrSuccessfulFlights(struct z*);
 void cheapestRocket(struct z*);
-void successfulFlightsBiggerThan(struct z*);
+void rangeInPrice(struct z*);
 void samePrice(struct z*);
 void alphabet(struct z*);
 void vstavka(struct z*, char*);
@@ -157,7 +157,7 @@ int main(array<System::String ^> ^args)
         {
             case 1: avrSuccessfulFlights(companies); break;
             case 2: cheapestRocket(companies); break;
-            case 3: successfulFlightsBiggerThan(companies); break;
+            case 3: rangeInPrice(companies); break;
             case 4: samePrice(companies); break;
             case 5: alphabet(companies); break;
             case 6: diagram(companies); break;
@@ -263,32 +263,25 @@ void cheapestRocket(struct z* company)
     _getch();
 }
 
-void successfulFlightsBiggerThan(struct z* company)
+void rangeInPrice(struct z* company)
 {
-    int biggerThan;
-    int counter = 0;
+    int minPrice = company[0].pricePerLaunch;
+    int maxPrice = minPrice;
+
+    for (int i = 1; i < NC; i++)
+    {
+        if (company[i].pricePerLaunch < minPrice)
+            minPrice = company[i].pricePerLaunch;
+
+        if (company[i].pricePerLaunch > maxPrice)
+            maxPrice = company[i].pricePerLaunch;
+    }
 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
     Console::CursorLeft = 35;
     Console::CursorTop = 20;
-    printf("Список ракет, у которых число удачных полетов больше чем: ");
-    scanf("%d", &biggerThan);
-
-    for (int i = 0; i < NC; i++)
-    {
-        if (company[i].successfulFlights > biggerThan)
-        {
-            counter++;
-            Console::CursorLeft = 35;
-            Console::CursorTop = 20 + counter;
-            printf(company[i].rocketName);
-        }
-    }
-
-    Console::CursorLeft = 35;
-    Console::CursorTop = 21 + counter;
-    printf("Всего: %d", counter);
+    printf("Размах ряда цены в миллионах $: %d", (maxPrice - minPrice));
 
     _getch();
 }
