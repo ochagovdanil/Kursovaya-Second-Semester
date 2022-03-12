@@ -15,6 +15,7 @@ namespace KursovayaGUI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Runtime::InteropServices;
 
 	int NC;
 
@@ -98,9 +99,12 @@ namespace KursovayaGUI {
 	private: System::Windows::Forms::TabControl^ tabControl1;
 	private: System::Windows::Forms::TabPage^ tabPage1;
 	private: System::Windows::Forms::TabPage^ tabPage2;
-	private: System::Windows::Forms::ListBox^ listBox1;
+
 	private: System::Windows::Forms::RichTextBox^ richTextBox1;
 	private: System::Windows::Forms::TabPage^ tabPage3;
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
+
 	protected:
 
 	private:
@@ -130,13 +134,15 @@ namespace KursovayaGUI {
 			this->âûõîäToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->tabPage2->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -165,14 +171,14 @@ namespace KursovayaGUI {
 			// îòêðûòüToolStripMenuItem
 			// 
 			this->îòêðûòüToolStripMenuItem->Name = L"îòêðûòüToolStripMenuItem";
-			this->îòêðûòüToolStripMenuItem->Size = System::Drawing::Size(135, 22);
+			this->îòêðûòüToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->îòêðûòüToolStripMenuItem->Text = L"Îòêðûòü";
 			this->îòêðûòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::îòêðûòüToolStripMenuItem_Click);
 			// 
 			// çàâåðøèòüToolStripMenuItem
 			// 
 			this->çàâåðøèòüToolStripMenuItem->Name = L"çàâåðøèòüToolStripMenuItem";
-			this->çàâåðøèòüToolStripMenuItem->Size = System::Drawing::Size(135, 22);
+			this->çàâåðøèòüToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->çàâåðøèòüToolStripMenuItem->Text = L"Çàâåðøèòü";
 			this->çàâåðøèòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::çàâåðøèòüToolStripMenuItem_Click);
 			// 
@@ -180,8 +186,8 @@ namespace KursovayaGUI {
 			// 
 			this->âîïðîñûToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
 				this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem,
-					this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem, this->ðàçìàõÐÿäàÖåíûToolStripMenuItem,
-					this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem, this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem, this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem
+					this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem, this->ðàçìàõÐÿäàÖåíûToolStripMenuItem, this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem,
+					this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem, this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem
 			});
 			this->âîïðîñûToolStripMenuItem->Enabled = false;
 			this->âîïðîñûToolStripMenuItem->Name = L"âîïðîñûToolStripMenuItem";
@@ -204,7 +210,7 @@ namespace KursovayaGUI {
 			// 
 			// ðàçìàõÐÿäàÖåíûToolStripMenuItem
 			// 
-			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Name = L"ñïèñîêÐàêåòÓÊîòîðûõ×èñëîÓäà÷íûõÇàïóñêîâÁîëüøåXToolStripMenuItem";
+			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Name = L"ðàçìàõÐÿäàÖåíûToolStripMenuItem";
 			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Size = System::Drawing::Size(472, 22);
 			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Text = L"Ðàçìàõ ðÿäà öåíû";
 			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::ðàçìàõÐÿäàÖåíûToolStripMenuItem_Click);
@@ -250,7 +256,7 @@ namespace KursovayaGUI {
 			// 
 			// tabPage1
 			// 
-			this->tabPage1->Controls->Add(this->listBox1);
+			this->tabPage1->Controls->Add(this->dataGridView1);
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
@@ -259,17 +265,17 @@ namespace KursovayaGUI {
 			this->tabPage1->Text = L"Èñõîäíûå äàííûå";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
-			// listBox1
+			// dataGridView1
 			// 
-			this->listBox1->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 17;
-			this->listBox1->Location = System::Drawing::Point(0, 0);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(1248, 684);
-			this->listBox1->TabIndex = 0;
-			this->listBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::listBox1_SelectedIndexChanged);
+			this->dataGridView1->AllowUserToAddRows = false;
+			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::Window;
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Location = System::Drawing::Point(0, 0);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->ReadOnly = true;
+			this->dataGridView1->Size = System::Drawing::Size(1252, 684);
+			this->dataGridView1->TabIndex = 0;
 			// 
 			// tabPage2
 			// 
@@ -304,6 +310,12 @@ namespace KursovayaGUI {
 			this->tabPage3->Click += gcnew System::EventHandler(this, &MyForm::tabPage3_Click);
 			this->tabPage3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::tabPage3_Paint);
 			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"SpaceCompanies";
+			this->openFileDialog1->Filter = L"Data Files (*.dat) | *.dat";
+			this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::openFileDialog1_FileOk);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -319,6 +331,7 @@ namespace KursovayaGUI {
 			this->menuStrip1->PerformLayout();
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage1->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->tabPage2->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -337,39 +350,51 @@ private: System::Void âûõîäToolStripMenuItem_Click(System::Object^ sender, Syste
 }
 private: System::Void îòêðûòüToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	FILE* in;
-	int i;
-	char ctemp[80];
-	char filePath[90] = "D:\\University\\ïðîãà\\êóðñà÷\\Kursovaya_GUI\\Kursovaya_GUI\\SpaceCompanies.dat";
 	String^ s;
 
-	if ((in = fopen(filePath, "r")) == NULL)
+	// Open the file
+	if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
-		MessageBox::Show("Ôàéë íå îòêðûò!", "Îøèáêà!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		return;
+		s = openFileDialog1->FileName;
+		char* str_tmp = (char*)(void*)Marshal::StringToHGlobalAnsi(s);
+		if ((in = fopen(str_tmp, "r")) == NULL)
+		{
+			MessageBox::Show("Ôàéë íå îòêðûò!", "Îøèáêà!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			Marshal::FreeHGlobal(IntPtr((void*)str_tmp));
+			return;
+		}
+		Marshal::FreeHGlobal(IntPtr((void*)str_tmp));
 	}
+	else return;
 
 	âîïðîñûToolStripMenuItem->Enabled = true;
-	listBox1->Items->Clear();
+
+	// Read the file
+	DataTable^ Table1 = gcnew DataTable();
+	this->dataGridView1->DataSource = Table1;
+	this->dataGridView1->AllowUserToAddRows = false;
+	this->dataGridView1->AllowUserToDeleteRows = false;
+	this->dataGridView1->ReadOnly = true;
+
+	Table1->Columns->Add("Êîìïàíèÿ");
+	Table1->Columns->Add("Ðàêåòà");
+	Table1->Columns->Add("Ñòîèìîñòü â M$");
+	Table1->Columns->Add("Óäà÷íûå ïóñêè");
+	Table1->Columns->Add("Íåóäà÷íûå ïóñêè");
+
+	this->dataGridView1->Columns["Ñòîèìîñòü â M$"]->HeaderCell->Style->Alignment = DataGridViewContentAlignment::MiddleRight;
+	this->dataGridView1->Columns["Ñòîèìîñòü â M$"]->DefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleRight;
+
+	this->dataGridView1->Columns["Óäà÷íûå ïóñêè"]->HeaderCell->Style->Alignment = DataGridViewContentAlignment::MiddleRight;
+	this->dataGridView1->Columns["Óäà÷íûå ïóñêè"]->DefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleRight;
+
+	this->dataGridView1->Columns["Íåóäà÷íûå ïóñêè"]->HeaderCell->Style->Alignment = DataGridViewContentAlignment::MiddleRight;
+	this->dataGridView1->Columns["Íåóäà÷íûå ïóñêè"]->DefaultCellStyle->Alignment = DataGridViewContentAlignment::MiddleRight;
 
 	fscanf(in, "%d", &NC);
 	companies = new z[NC];
 
-	sprintf(ctemp, "%-20s %-20s %-15s %-15s %-10s",
-		"Êîìïàíèÿ",
-		"Ðàêåòà",
-		"Ñòîèìîñòü â M$",
-		"Óäà÷íûå ïóñêè",
-		"Íåóäà÷íûå ïóñêè");
-	s = gcnew String(ctemp);
-	listBox1->Items->Add(s);
-
-	char separator[95];
-	memset(separator, '-', 91);
-	separator[91] = 0;
-	s = gcnew String(separator);
-	listBox1->Items->Add(s);
-
-	for (i = 0; i < NC; i++)
+	for (int i = 0; i < NC; i++)
 	{
 		fscanf(in, "%s%s%d%d%d",
 			companies[i].companyName,
@@ -377,15 +402,15 @@ private: System::Void îòêðûòüToolStripMenuItem_Click(System::Object^ sender, Sys
 			&companies[i].pricePerLaunch,
 			&companies[i].successfulFlights,
 			&companies[i].failureFlights);
-		sprintf(ctemp, "%-20s %-20s %-15d %-15d %-10d", 
-			companies[i].companyName,
-			companies[i].rocketName,
-			companies[i].pricePerLaunch,
-			companies[i].successfulFlights,
-			companies[i].failureFlights);
 
-		s = gcnew String(ctemp);
-		listBox1->Items->Add(s);
+		Table1->Rows->Add();
+		s = gcnew String(companies[i].companyName);
+		Table1->Rows[i][0] = s;
+		s = gcnew String(companies[i].rocketName);
+		Table1->Rows[i][1] = s;
+		Table1->Rows[i][2] = companies[i].pricePerLaunch;
+		Table1->Rows[i][3] = companies[i].successfulFlights;
+		Table1->Rows[i][4] = companies[i].failureFlights;
 	}
 
 	fclose(in);
@@ -567,6 +592,8 @@ private: System::Void tabPage3_Paint(System::Object^ sender, System::Windows::Fo
 		g->DrawString(gcnew String(nt->companyName), myFont, myBrush, 320, 55 + (i - 1) * 20);
 		g->DrawString(Convert::ToString(nt->successfulFlights * 100 / flights) + "%", myFont, myBrush, xPos, yPos);
 	}
+}
+private: System::Void openFileDialog1_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
 }
 };
 }
