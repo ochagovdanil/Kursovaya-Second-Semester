@@ -5,7 +5,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-#include <fstream>
+
+int NC;
+
+struct z {
+	char companyName[20];
+	char rocketName[20];
+	int pricePerLaunch;
+	int successfulFlights;
+	int failureFlights;
+} *companies;
+
+struct sp {
+	char companyName[20];
+	int successfulFlights;
+	struct sp* sled;
+	struct sp* pred;
+} *spisok;
+
+void vstavka(struct z* company, char* companyName)
+{
+	struct sp* nov, * nt, * z = 0;
+
+	for (nt = spisok; nt != 0 && strcmp(nt->companyName, companyName) < 0; z = nt, nt = nt->sled);
+
+	if (nt && strcmp(nt->companyName, companyName) == 0) return;
+
+	nov = (struct sp*)malloc(sizeof(struct sp));
+	strcpy(nov->companyName, companyName);
+	nov->sled = nt;
+	nov->pred = z;
+	nov->successfulFlights = 0;
+
+	for (int i = 0; i < NC; i++)
+		if (strcmp(company[i].companyName, companyName) == 0)
+			nov->successfulFlights += company[i].successfulFlights;
+
+	if (!z) spisok = nov;
+	else z->sled = nov;
+	if (nt) nt->pred = nov;
+	return;
+}
 
 namespace KursovayaGUI {
 
@@ -17,52 +57,11 @@ namespace KursovayaGUI {
 	using namespace System::Drawing;
 	using namespace System::Runtime::InteropServices;
 
-	int NC;
-
-	struct z {
-		char companyName[20];
-		char rocketName[20];
-		int pricePerLaunch;
-		int successfulFlights;
-		int failureFlights;
-	} *companies;
-
-	struct sp {
-		char companyName[20];
-		int successfulFlights;
-		struct sp* sled;
-		struct sp* pred;
-	} *spisok;
-
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
-
-		void vstavka(struct z* company, char* companyName)
-		{
-			struct sp* nov, * nt, * z = 0;
-
-			for (nt = spisok; nt != 0 && strcmp(nt->companyName, companyName) < 0; z = nt, nt = nt->sled);
-
-			if (nt && strcmp(nt->companyName, companyName) == 0) return;
-
-			nov = (struct sp*)malloc(sizeof(struct sp));
-			strcpy(nov->companyName, companyName);
-			nov->sled = nt;
-			nov->pred = z;
-			nov->successfulFlights = 0;
-
-			for (int i = 0; i < NC; i++)
-				if (strcmp(company[i].companyName, companyName) == 0)
-					nov->successfulFlights += company[i].successfulFlights;
-
-			if (!z) spisok = nov;
-			else z->sled = nov;
-			if (nt) nt->pred = nov;
-			return;
-		}
 
 	public:
 		MyForm(void)
@@ -120,6 +119,9 @@ namespace KursovayaGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->файлToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -149,13 +151,15 @@ namespace KursovayaGUI {
 			// 
 			// menuStrip1
 			// 
+			this->menuStrip1->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
 				this->файлToolStripMenuItem,
 					this->вопросыToolStripMenuItem, this->выходToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1256, 24);
+			this->menuStrip1->Size = System::Drawing::Size(1254, 25);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -166,20 +170,20 @@ namespace KursovayaGUI {
 					this->завершитьToolStripMenuItem
 			});
 			this->файлToolStripMenuItem->Name = L"файлToolStripMenuItem";
-			this->файлToolStripMenuItem->Size = System::Drawing::Size(48, 20);
+			this->файлToolStripMenuItem->Size = System::Drawing::Size(56, 21);
 			this->файлToolStripMenuItem->Text = L"Файл";
 			// 
 			// открытьToolStripMenuItem
 			// 
 			this->открытьToolStripMenuItem->Name = L"открытьToolStripMenuItem";
-			this->открытьToolStripMenuItem->Size = System::Drawing::Size(135, 22);
+			this->открытьToolStripMenuItem->Size = System::Drawing::Size(157, 22);
 			this->открытьToolStripMenuItem->Text = L"Открыть";
 			this->открытьToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::открытьToolStripMenuItem_Click);
 			// 
 			// завершитьToolStripMenuItem
 			// 
 			this->завершитьToolStripMenuItem->Name = L"завершитьToolStripMenuItem";
-			this->завершитьToolStripMenuItem->Size = System::Drawing::Size(135, 22);
+			this->завершитьToolStripMenuItem->Size = System::Drawing::Size(157, 22);
 			this->завершитьToolStripMenuItem->Text = L"Завершить";
 			this->завершитьToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::завершитьToolStripMenuItem_Click);
 			// 
@@ -192,55 +196,55 @@ namespace KursovayaGUI {
 			});
 			this->вопросыToolStripMenuItem->Enabled = false;
 			this->вопросыToolStripMenuItem->Name = L"вопросыToolStripMenuItem";
-			this->вопросыToolStripMenuItem->Size = System::Drawing::Size(69, 20);
+			this->вопросыToolStripMenuItem->Size = System::Drawing::Size(83, 21);
 			this->вопросыToolStripMenuItem->Text = L"Вопросы";
 			// 
 			// среднееАрифметическоеУспешныхЗапусковToolStripMenuItem
 			// 
 			this->среднееАрифметическоеУспешныхЗапусковToolStripMenuItem->Name = L"среднееАрифметическоеУспешныхЗапусковToolStripMenuItem";
-			this->среднееАрифметическоеУспешныхЗапусковToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->среднееАрифметическоеУспешныхЗапусковToolStripMenuItem->Size = System::Drawing::Size(643, 22);
 			this->среднееАрифметическоеУспешныхЗапусковToolStripMenuItem->Text = L"Среднее арифметическое успешных запусков\? ";
 			this->среднееАрифметическоеУспешныхЗапусковToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::среднееАрифметическоеУспешныхЗапусковToolStripMenuItem_Click);
 			// 
 			// какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem
 			// 
 			this->какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem->Name = L"какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem";
-			this->какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem->Size = System::Drawing::Size(643, 22);
 			this->какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem->Text = L"Какая самая дешевая ракета для запуска\? ";
 			this->какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem_Click);
 			// 
 			// размахРядаЦеныToolStripMenuItem
 			// 
 			this->размахРядаЦеныToolStripMenuItem->Name = L"размахРядаЦеныToolStripMenuItem";
-			this->размахРядаЦеныToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->размахРядаЦеныToolStripMenuItem->Size = System::Drawing::Size(643, 22);
 			this->размахРядаЦеныToolStripMenuItem->Text = L"Размах ряда цены";
 			this->размахРядаЦеныToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::размахРядаЦеныToolStripMenuItem_Click);
 			// 
 			// естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem
 			// 
 			this->естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem->Name = L"естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem";
-			this->естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem->Size = System::Drawing::Size(643, 22);
 			this->естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem->Text = L"Есть ли одинаковая цена запуска у разных компаний\?";
 			this->естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem_Click);
 			// 
 			// алфавитныйСписокВсехКомпанийToolStripMenuItem
 			// 
 			this->алфавитныйСписокВсехКомпанийToolStripMenuItem->Name = L"алфавитныйСписокВсехКомпанийToolStripMenuItem";
-			this->алфавитныйСписокВсехКомпанийToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->алфавитныйСписокВсехКомпанийToolStripMenuItem->Size = System::Drawing::Size(643, 22);
 			this->алфавитныйСписокВсехКомпанийToolStripMenuItem->Text = L"Алфавитный список всех компаний";
 			this->алфавитныйСписокВсехКомпанийToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::алфавитныйСписокВсехКомпанийToolStripMenuItem_Click);
 			// 
 			// диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem
 			// 
 			this->диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem->Name = L"диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem";
-			this->диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem->Size = System::Drawing::Size(472, 22);
+			this->диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem->Size = System::Drawing::Size(643, 22);
 			this->диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem->Text = L"Диаграмма. Процентное соотношение всех запусков каждой компании";
 			this->диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::диаграммаПроцентноеСоотношениеВсехЗапусковКаждойКомпанииToolStripMenuItem_Click);
 			// 
 			// выходToolStripMenuItem
 			// 
 			this->выходToolStripMenuItem->Name = L"выходToolStripMenuItem";
-			this->выходToolStripMenuItem->Size = System::Drawing::Size(54, 20);
+			this->выходToolStripMenuItem->Size = System::Drawing::Size(65, 21);
 			this->выходToolStripMenuItem->Text = L"Выход";
 			this->выходToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::выходToolStripMenuItem_Click);
 			// 
@@ -249,6 +253,8 @@ namespace KursovayaGUI {
 			this->tabControl1->Controls->Add(this->tabPage1);
 			this->tabControl1->Controls->Add(this->tabPage2);
 			this->tabControl1->Controls->Add(this->tabPage3);
+			this->tabControl1->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->tabControl1->Location = System::Drawing::Point(0, 27);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
@@ -258,10 +264,10 @@ namespace KursovayaGUI {
 			// tabPage1
 			// 
 			this->tabPage1->Controls->Add(this->dataGridView1);
-			this->tabPage1->Location = System::Drawing::Point(4, 22);
+			this->tabPage1->Location = System::Drawing::Point(4, 26);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(1248, 680);
+			this->tabPage1->Size = System::Drawing::Size(1248, 676);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Исходные данные";
 			this->tabPage1->UseVisualStyleBackColor = true;
@@ -271,28 +277,58 @@ namespace KursovayaGUI {
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::Window;
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle1->Padding = System::Windows::Forms::Padding(2);
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Window;
+			dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::ControlText;
+			dataGridViewCellStyle2->Padding = System::Windows::Forms::Padding(2);
+			dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->DefaultCellStyle = dataGridViewCellStyle2;
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
-			this->dataGridView1->Size = System::Drawing::Size(1252, 684);
+			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle3->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle3->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle3->Padding = System::Windows::Forms::Padding(2);
+			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			this->dataGridView1->Size = System::Drawing::Size(1248, 684);
 			this->dataGridView1->TabIndex = 0;
 			// 
 			// tabPage2
 			// 
 			this->tabPage2->Controls->Add(this->richTextBox1);
-			this->tabPage2->Location = System::Drawing::Point(4, 22);
+			this->tabPage2->Location = System::Drawing::Point(4, 26);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(1248, 680);
+			this->tabPage2->Size = System::Drawing::Size(1248, 676);
 			this->tabPage2->TabIndex = 1;
-			this->tabPage2->Text = L"Список";
+			this->tabPage2->Text = L"Алфавитный список";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			this->tabPage2->Click += gcnew System::EventHandler(this, &MyForm::tabPage2_Click);
 			// 
 			// richTextBox1
 			// 
-			this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Courier New", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Courier New", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->richTextBox1->Location = System::Drawing::Point(0, 0);
 			this->richTextBox1->Name = L"richTextBox1";
@@ -302,9 +338,9 @@ namespace KursovayaGUI {
 			// 
 			// tabPage3
 			// 
-			this->tabPage3->Location = System::Drawing::Point(4, 22);
+			this->tabPage3->Location = System::Drawing::Point(4, 26);
 			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Size = System::Drawing::Size(1248, 680);
+			this->tabPage3->Size = System::Drawing::Size(1248, 676);
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Диаграмма";
 			this->tabPage3->UseVisualStyleBackColor = true;
@@ -321,7 +357,7 @@ namespace KursovayaGUI {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1256, 735);
+			this->ClientSize = System::Drawing::Size(1254, 741);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->menuStrip1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -346,37 +382,6 @@ namespace KursovayaGUI {
 		this->Close();
 	}
 private: System::Void tabPage2_Click(System::Object^ sender, System::EventArgs^ e) {
-	int i = 0;
-	struct sp* nt, * z;
-	String^ s;
-	char ss[100];
-
-	if (!spisok)
-		for (int i = 0; i < NC; i++)
-			vstavka(companies, companies[i].companyName);
-
-	richTextBox1->ReadOnly = 1;
-	richTextBox1->Clear();
-	richTextBox1->Text = "Алфавитный список А->Я";
-	richTextBox1->Text = richTextBox1->Text + "\n----------------------------";
-
-	for (nt = spisok; nt != 0; nt = nt->sled)
-	{
-		sprintf(ss, "%-20s %-10d", nt->companyName, nt->successfulFlights);
-		s = gcnew String(ss, 0, 31);
-		richTextBox1->Text = richTextBox1->Text + "\n" + s;
-	}
-
-	richTextBox1->Text = richTextBox1->Text + "\n\n\nАлфавитный список Я->А";
-	richTextBox1->Text = richTextBox1->Text + "\n----------------------------";
-
-	for (z = 0, nt = spisok; nt != 0; z = nt, nt = nt->sled);
-	for (nt = z; nt != 0; nt = nt->pred)
-	{
-		sprintf(ss, "%-20s %-10d", nt->companyName, nt->successfulFlights);
-		s = gcnew String(ss, 0, 31);
-		richTextBox1->Text = richTextBox1->Text + "\n" + s;
-	}
 }
 private: System::Void выходToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Close();
@@ -390,12 +395,14 @@ private: System::Void открытьToolStripMenuItem_Click(System::Object^ sender, Sys
 	{
 		s = openFileDialog1->FileName;
 		char* str_tmp = (char*)(void*)Marshal::StringToHGlobalAnsi(s);
+
 		if ((in = fopen(str_tmp, "r")) == NULL)
 		{
 			MessageBox::Show("Файл не открыт!", "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			Marshal::FreeHGlobal(IntPtr((void*)str_tmp));
 			return;
 		}
+
 		Marshal::FreeHGlobal(IntPtr((void*)str_tmp));
 	}
 	else return;
@@ -459,7 +466,7 @@ private: System::Void среднееАрифметическоеУспешныхЗапусковToolStripMenuItem_Cli
 	sprintf(ss, "%.3f", (float)totalFlights / NC);
 	s = gcnew String(ss);
 
-	MessageBox::Show(s, "Среднее арифметическое успешных запусков");
+	MessageBox::Show(s, "Среднее арифметическое успешных запусков", MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 private: System::Void какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	struct z cheapest = companies[0];
@@ -482,7 +489,7 @@ private: System::Void какаяСамаяДешеваяРакетаДляЗапускаToolStripMenuItem_Click(S
 		cheapest.pricePerLaunch);
 	s = gcnew String(ss);
 
-	MessageBox::Show(s, "Самая дешевая ракета для запуска");
+	MessageBox::Show(s, "Самая дешевая ракета для запуска", MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 private: System::Void естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	bool isSamePrice = false;
@@ -502,7 +509,7 @@ private: System::Void естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuIte
 					companies[j].pricePerLaunch);
 				s = gcnew String(ss);
 
-				MessageBox::Show(s, "Совпадения есть!");
+				MessageBox::Show(s, "Совпадения есть!", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				break;
 			}
 		}
@@ -511,7 +518,7 @@ private: System::Void естьЛиОдинаковаяЦенаЗапускаУРазныхКомпанийToolStripMenuIte
 	}
 
 	if (!isSamePrice)
-		MessageBox::Show("Совпадений нет!");
+		MessageBox::Show("Совпадений нет!", "Ошибка!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 }
 private: System::Void размахРядаЦеныToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	int minPrice = companies[0].pricePerLaunch;
@@ -531,7 +538,7 @@ private: System::Void размахРядаЦеныToolStripMenuItem_Click(System::Object^ send
 	sprintf(ss, "%d", (maxPrice - minPrice));
 	s = gcnew String(ss);
 
-	MessageBox::Show(s, "Размах ряда цены в миллионах $");
+	MessageBox::Show(s, "Размах ряда цены в миллионах $", MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 private: System::Void алфавитныйСписокВсехКомпанийToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	int i = 0;
