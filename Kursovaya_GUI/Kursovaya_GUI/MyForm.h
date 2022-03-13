@@ -120,6 +120,7 @@ namespace KursovayaGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->ôàéëToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->îòêðûòüToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -171,14 +172,14 @@ namespace KursovayaGUI {
 			// îòêðûòüToolStripMenuItem
 			// 
 			this->îòêðûòüToolStripMenuItem->Name = L"îòêðûòüToolStripMenuItem";
-			this->îòêðûòüToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->îòêðûòüToolStripMenuItem->Size = System::Drawing::Size(135, 22);
 			this->îòêðûòüToolStripMenuItem->Text = L"Îòêðûòü";
 			this->îòêðûòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::îòêðûòüToolStripMenuItem_Click);
 			// 
 			// çàâåðøèòüToolStripMenuItem
 			// 
 			this->çàâåðøèòüToolStripMenuItem->Name = L"çàâåðøèòüToolStripMenuItem";
-			this->çàâåðøèòüToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->çàâåðøèòüToolStripMenuItem->Size = System::Drawing::Size(135, 22);
 			this->çàâåðøèòüToolStripMenuItem->Text = L"Çàâåðøèòü";
 			this->çàâåðøèòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::çàâåðøèòüToolStripMenuItem_Click);
 			// 
@@ -323,6 +324,7 @@ namespace KursovayaGUI {
 			this->ClientSize = System::Drawing::Size(1256, 735);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->menuStrip1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MyForm";
 			this->Text = L"Êóðñîâàÿ GUI";
@@ -344,6 +346,37 @@ namespace KursovayaGUI {
 		this->Close();
 	}
 private: System::Void tabPage2_Click(System::Object^ sender, System::EventArgs^ e) {
+	int i = 0;
+	struct sp* nt, * z;
+	String^ s;
+	char ss[100];
+
+	if (!spisok)
+		for (int i = 0; i < NC; i++)
+			vstavka(companies, companies[i].companyName);
+
+	richTextBox1->ReadOnly = 1;
+	richTextBox1->Clear();
+	richTextBox1->Text = "Àëôàâèòíûé ñïèñîê À->ß";
+	richTextBox1->Text = richTextBox1->Text + "\n----------------------------";
+
+	for (nt = spisok; nt != 0; nt = nt->sled)
+	{
+		sprintf(ss, "%-20s %-10d", nt->companyName, nt->successfulFlights);
+		s = gcnew String(ss, 0, 31);
+		richTextBox1->Text = richTextBox1->Text + "\n" + s;
+	}
+
+	richTextBox1->Text = richTextBox1->Text + "\n\n\nÀëôàâèòíûé ñïèñîê ß->À";
+	richTextBox1->Text = richTextBox1->Text + "\n----------------------------";
+
+	for (z = 0, nt = spisok; nt != 0; z = nt, nt = nt->sled);
+	for (nt = z; nt != 0; nt = nt->pred)
+	{
+		sprintf(ss, "%-20s %-10d", nt->companyName, nt->successfulFlights);
+		s = gcnew String(ss, 0, 31);
+		richTextBox1->Text = richTextBox1->Text + "\n" + s;
+	}
 }
 private: System::Void âûõîäToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Close();
