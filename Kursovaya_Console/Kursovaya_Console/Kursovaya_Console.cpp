@@ -64,7 +64,7 @@ void diagram(struct z*);
 int main(array<System::String ^> ^args)
 {
     char BlankLine[80]; memset(BlankLine, ' ', 65); BlankLine[65] = 0;
-    char filePath[90] = "D:\\University\\прога\\курсач\\Kursovaya_Console\\Kursovaya_Console\\SpaceCompanies.dat"; // путь до файла, который необходимо прочесть
+    char filePath[90] = "SpaceCompanies.dat"; // путь до файла, который необходимо прочесть
     int i, n;
     FILE* in;
     struct z* companies;
