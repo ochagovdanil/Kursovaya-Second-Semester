@@ -1,4 +1,5 @@
-﻿#include "pch.h"
+﻿// подключение сторонних библиотек
+#include "pch.h"
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <conio.h>
@@ -6,6 +7,7 @@
 #include <windows.h>
 #include <malloc.h>
 
+// коды определенных кнопок
 #define ENTER 13
 #define ESC 27
 #define UP 72
@@ -19,14 +21,16 @@ using namespace std;
 using namespace System;
 using namespace System::IO;
 
+// шаблон структуры для исходных данных
 struct z {
-    char companyName[20];
-    char rocketName[20];
-    int pricePerLaunch;
-    int successfulFlights;
-    int failureFlights;
+    char companyName[20]; // имя космической компании
+    char rocketName[20]; // название ракеты
+    int pricePerLaunch; // цена в миллионах $ за один запуск
+    int successfulFlights; // количество успешных запусков
+    int failureFlights; // количество неуспешных запусков
 };
 
+// шаблон структуры для вывода алфавитного списка
 struct sp {
     char companyName[20];
     int successfulFlights;
@@ -34,6 +38,7 @@ struct sp {
     struct sp* pred;
 } *spisok;
 
+// список вопросов, пункты меню
 char dan[7][70] = {
         "Среднее арифметическое успешных запусков?                      ",
         "Какая самая дешевая ракета для запуска?                        ",
@@ -44,8 +49,9 @@ char dan[7][70] = {
         "Выход                                                          "
 };
 
-int NC = 0;
+int NC = 0; // количество строчек с данными в файле
 
+// шаблоны функций
 int menu(int);
 void avrSuccessfulFlights(struct z*);
 void cheapestRocket(struct z*);
@@ -58,37 +64,39 @@ void diagram(struct z*);
 int main(array<System::String ^> ^args)
 {
     char BlankLine[80]; memset(BlankLine, ' ', 65); BlankLine[65] = 0;
-    char filePath[90] = "D:\\University\\прога\\курсач\\Kursovaya_Console\\Kursovaya_Console\\SpaceCompanies.dat";
+    char filePath[90] = "D:\\University\\прога\\курсач\\Kursovaya_Console\\Kursovaya_Console\\SpaceCompanies.dat"; // путь до файла, который необходимо прочесть
     int i, n;
     FILE* in;
     struct z* companies;
 
-    // Add Russian support
+    // добавляем поддержку русского языка
     setlocale(LC_CTYPE, "Russian");
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    // Add styles
-    Console::BufferHeight = Console::WindowHeight;
-    Console::BufferWidth = Console::WindowWidth;
-    Console::CursorVisible::set(false);
+    Console::BufferHeight = Console::WindowHeight; // устанавливаем высоту окна
+    Console::BufferWidth = Console::WindowWidth; // устанавливаем ширину окна
+    Console::CursorVisible::set(false); // выключаем видимость курсора
+    // установка цветов для фона и текста
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
     Console::Clear();
     Console::BackgroundColor = ConsoleColor::Red;
 
-    // Open data file
+    // открываем файл
     if ((in = fopen(filePath, "r")) == NULL)
     {
+        // если файл не открыт
         printf("\nФайл %s не открыт!", filePath);
         _getch();
         exit(1);
     }
 
-    // Read the file
+    // если файл открыт, то читаем количество строчек
     fscanf(in, "%d", &NC);
-    companies = (struct z*)malloc(NC * sizeof(struct z));
+    companies = (struct z*)malloc(NC * sizeof(struct z)); // выделяем память для списка структур
 
+    // читаем строчки
     for (i = 0; i < NC; i++)
         fscanf(in, "%s%s%d%d%d", 
             companies[i].companyName, 
@@ -97,7 +105,7 @@ int main(array<System::String ^> ^args)
             &companies[i].successfulFlights, 
             &companies[i].failureFlights);
 
-    // Outputting the file
+    // выводим заголовок таблицы
     Console::CursorTop = 8;
     Console::CursorLeft = 20;
     printf(" %-20s %-20s %-15s %-15s %-15s ", 
@@ -114,6 +122,7 @@ int main(array<System::String ^> ^args)
     Console::CursorLeft = 20;
     printf("%s", separator);
 
+    // выводим данные из файла на экран
     for (i = 0; i < NC; i++)
     {
         Console::CursorTop = 10 + i;
@@ -128,9 +137,10 @@ int main(array<System::String ^> ^args)
 
     _getch();
 
-    // Dispaly menu
+    // рисуем пункты меню
     while (1)
     {
+        // устанавливаем цвета для текста и фона
         Console::ForegroundColor = ConsoleColor::Red;
         Console::BackgroundColor = ConsoleColor::Blue;
         Console::Clear();
@@ -140,6 +150,7 @@ int main(array<System::String ^> ^args)
         Console::CursorTop = 6;
         printf(BlankLine);
 
+        // вывод вопросов как пунктов меню
         for (i = 0; i < 7; i++)
         {
             Console::CursorLeft = 35;
@@ -151,8 +162,9 @@ int main(array<System::String ^> ^args)
         Console::CursorTop = 14;
         printf(BlankLine);
 
-        n = menu(7); // Select current item in menu
+        n = menu(7); // выбор вопроса в меню
 
+        // отвечаем на вопросы, если пользователь нажал кнопку
         switch (n)
         {
             case 1: avrSuccessfulFlights(companies); break;
@@ -170,33 +182,34 @@ int main(array<System::String ^> ^args)
 
 int menu(int n)
 {
-    int y1 = 0, y2 = n - 1;
+    int y1 = 0, y2 = n - 1; // выделяем пункт меню
     char c = 1;
 
-    while (c != ESC)
+    while (c != ESC) // если нажать ESC, то меню закрывается
     {
         switch (c)
         {
-            case HOME: y2 = y1;  y1 = 0; break;
-            case END: y2 = y1;  y1 = n - 1; break;
-            case PAGEDOWN:
+            case HOME: y2 = y1;  y1 = 0; break; // кнопка HOME - выбор первого пункта меню
+            case END: y2 = y1;  y1 = n - 1; break; // кнопка END - выбор последнего пункта меню
+            case PAGEDOWN: // кнопка PGDN и DOWN - выбор пункта ниже
             case DOWN: y2 = y1; y1++; break;
-            case PAGEUP:
+            case PAGEUP: // кнопка PGUP и UP - выбор пункта выше
             case UP: y2 = y1; y1--; break;
-            case ENTER: return y1 + 1;
+            case ENTER: return y1 + 1; // кнопка ENTER - выбор вопроса
         }
 
-        if (y1 > n - 1)
+        if (y1 > n - 1) // условие, когда срабатывает выбор пункта ниже
         {
             y2 = n - 1; 
             y1 = 0;
         }
-        if (y1 < 0)
+        if (y1 < 0) // условие, когда срабатывает выбор пункта выше
         {
             y2 = 0;
             y1 = n - 1;
         }
 
+        // установка стилей для активного и неактивного пункта меню
         Console::ForegroundColor = ConsoleColor::White;
         Console::BackgroundColor = ConsoleColor::Green;
         Console::CursorLeft = 35;
@@ -214,30 +227,32 @@ int menu(int n)
     exit(0);
 }
 
+// среднее арифметическое успешных запусков
 void avrSuccessfulFlights(struct z* company)
 {
-    int totalFlights = 0;
+    int totalFlights = 0; // общая сумма всех успешных запусков
 
     for (int i = 0; i < NC; i++)
     {
         totalFlights += company[i].successfulFlights;
     }
 
-    float avrg = (float) totalFlights / NC;
+    float avrg = (float) totalFlights / NC; // находим среднее арифметическое
 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
     Console::CursorLeft = 35;
     Console::CursorTop = 20;
-    printf("Среднее арифметическое успешных запусков: %.3f", avrg);
+    printf("Среднее арифметическое успешных запусков: %.3f", avrg); // вывод ответа
 
     _getch();
 }
 
+// какая самая дешевая ракета для запуска
 void cheapestRocket(struct z* company)
 {
-    struct z cheapest = company[0];
-    int minPrice = cheapest.pricePerLaunch;
+    struct z cheapest = company[0]; // самая дешевая ракета (структура)
+    int minPrice = cheapest.pricePerLaunch; // самая низкая цена запуска
     
     for (int i = 1; i < NC; i++)
     {
@@ -248,6 +263,7 @@ void cheapestRocket(struct z* company)
         }
     }
 
+    // вывод информации 
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
     Console::CursorLeft = 35;
@@ -263,10 +279,11 @@ void cheapestRocket(struct z* company)
     _getch();
 }
 
+// размах ряда цены
 void rangeInPrice(struct z* company)
 {
-    int minPrice = company[0].pricePerLaunch;
-    int maxPrice = minPrice;
+    int minPrice = company[0].pricePerLaunch; // минимальная цена
+    int maxPrice = minPrice; // максимальная цена
 
     for (int i = 1; i < NC; i++)
     {
@@ -277,6 +294,7 @@ void rangeInPrice(struct z* company)
             maxPrice = company[i].pricePerLaunch;
     }
 
+    // вывод размаха ряда цены
     Console::ForegroundColor = ConsoleColor::Yellow;
     Console::BackgroundColor = ConsoleColor::Blue;
     Console::CursorLeft = 35;
@@ -286,6 +304,7 @@ void rangeInPrice(struct z* company)
     _getch();
 }
 
+// есть ли одинаковая цена запуска у разных компаний (сложный вопрос)
 void samePrice(struct z* company)
 {
     bool isSamePrice = false;
@@ -297,7 +316,7 @@ void samePrice(struct z* company)
     {
         for (int j = i + 1; j < NC; j++)
         {
-            if (company[i].pricePerLaunch == company[j].pricePerLaunch) {
+            if (company[i].pricePerLaunch == company[j].pricePerLaunch) { // совпадения есть
                 isSamePrice = true;
                 Console::CursorLeft = 35;
                 Console::CursorTop = 20;
@@ -312,7 +331,7 @@ void samePrice(struct z* company)
             break;
     }
 
-    if (!isSamePrice)
+    if (!isSamePrice) // совпадений нет
     {
         Console::CursorLeft = 35;
         Console::CursorTop = 20;
@@ -322,6 +341,7 @@ void samePrice(struct z* company)
     _getch();
 }
 
+// вывод алфавитного списка всех компаний
 void alphabet(struct z* company)
 {
     int i = 0;
@@ -330,14 +350,14 @@ void alphabet(struct z* company)
     Console::BackgroundColor = ConsoleColor::Blue;
     Console::Clear();
 
-    // Sort the list if it's not sorted yet
+    // сортируем список, если он еще не отсортирован
     if (!spisok)
         for (int i = 0; i < NC; i++)
             vstavka(company, company[i].companyName);
 
     Console::Clear();
 
-    // Output ASC order
+    // вывод списка в прямом порядке (А->Я)
     Console::CursorLeft = 5;
     Console::CursorTop = 10;
     printf("Алфавитный список А->Я");
@@ -353,7 +373,7 @@ void alphabet(struct z* company)
         printf("%-20s %-10d", nt->companyName, nt->successfulFlights);
     }
 
-    // Output DEC order
+    // вывод списка в обратном порядке (Я->А)
     i = 0;
     Console::CursorLeft = 100;
     Console::CursorTop = 10;
@@ -374,6 +394,7 @@ void alphabet(struct z* company)
     _getch();  
 }
 
+// вставка элемента в алфавитный список
 void vstavka(struct z* company, char* companyName)
 {
     struct sp *nov, *nt, *z = 0;
@@ -388,6 +409,7 @@ void vstavka(struct z* company, char* companyName)
     nov->pred = z;
     nov->successfulFlights = 0;
 
+    // суммируем число успешных полетов у одинаковых компаний (группируем)
     for (int i = 0; i < NC; i++)
         if (strcmp(company[i].companyName, companyName) == 0)
             nov->successfulFlights += company[i].successfulFlights;
@@ -398,12 +420,14 @@ void vstavka(struct z* company, char* companyName)
     return; 
 }
 
+// диаграмма, процентное соотношение всех запусков каждой компании
 void diagram(struct z* company)
 {
     struct sp *nt;
     int len, i, NColor;
     long flights = 0;
 
+    // ищем общее количество успешных полетов всех компаний
     for (i = 0; i < NC; i++)
         flights = flights + company[i].successfulFlights;
 
@@ -414,7 +438,7 @@ void diagram(struct z* company)
     Color = ConsoleColor::Black;
     NColor = 0;
 
-    // Sort the list if it's not sorted yet
+    // сортируем список, если он еще не отсортирован
     if (!spisok)
         for (i = 0; i < NC; i++)
             vstavka(company, company[i].companyName);
@@ -428,7 +452,7 @@ void diagram(struct z* company)
     Console::CursorTop = 10;
     printf("Соотношение удачных полетов в %%");
 
-    // Draw the diagram
+    // рисуем диаграмму
     for (nt = spisok, i = 0; nt != 0; nt = nt->sled, i+=2)
     {
         Console::ForegroundColor = ConsoleColor::White;
@@ -450,7 +474,7 @@ void diagram(struct z* company)
         for (len + 1; len < 100; len++)
             printf(" ");
         
-        if (NColor == 14)
+        if (NColor == 14) // в диаграмме 14 цветов
         {
             Color = ConsoleColor::Black;
             NColor = 0;
