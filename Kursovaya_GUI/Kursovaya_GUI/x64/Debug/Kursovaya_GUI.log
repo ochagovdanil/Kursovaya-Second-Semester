@@ -1,6 +1,6 @@
 ﻿  MyForm.cpp
-D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\MyForm.h(629,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\MyForm.h(630,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\MyForm.h(632,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\MyForm.h(639,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\MyForm.h(640,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\MyForm.h(642,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   Kursovaya_GUI.vcxproj -> D:\University\прога\курсач\Kursovaya_GUI\Kursovaya_GUI\x64\Debug\Kursovaya_GUI.exe

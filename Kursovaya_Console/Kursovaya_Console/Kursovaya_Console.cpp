@@ -32,10 +32,10 @@ struct z {
 
 // шаблон структуры для вывода алфавитного списка
 struct sp {
-    char companyName[20];
-    int successfulFlights;
-    struct sp* sled;
-    struct sp* pred;
+    char companyName[20]; // имя компании
+    int successfulFlights; // сумма успешных полетов
+    struct sp* sled; // ссылка на следующий элемент в списке
+    struct sp* pred; // ссылка на предыдущий элемент в списке
 } *spisok;
 
 // список вопросов, пункты меню
@@ -64,7 +64,7 @@ void diagram(struct z*);
 int main(array<System::String ^> ^args)
 {
     char BlankLine[80]; memset(BlankLine, ' ', 65); BlankLine[65] = 0;
-    char filePath[90] = "SpaceCompanies.dat"; // путь до файла, который необходимо прочесть
+    char filePath[90] = "D:\\University\\прога\\курсач\\Kursovaya_Console\\Kursovaya_Console\\SpaceCompanies.dat"; // путь до файла, который необходимо прочесть
     int i, n;
     FILE* in;
     struct z* companies;

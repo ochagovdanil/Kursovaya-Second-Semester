@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include "MyForm2.h"
 
 int NC;
 
@@ -103,6 +104,7 @@ namespace KursovayaGUI {
 	private: System::Windows::Forms::TabPage^ tabPage3;
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::ToolStripMenuItem^ ÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem;
 
 	protected:
 
@@ -142,6 +144,7 @@ namespace KursovayaGUI {
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -189,10 +192,11 @@ namespace KursovayaGUI {
 			// 
 			// âîïðîñûToolStripMenuItem
 			// 
-			this->âîïðîñûToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+			this->âîïðîñûToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(7) {
 				this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem,
 					this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem, this->ðàçìàõÐÿäàÖåíûToolStripMenuItem, this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem,
-					this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem, this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem
+					this->÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem, this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem,
+					this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem
 			});
 			this->âîïðîñûToolStripMenuItem->Enabled = false;
 			this->âîïðîñûToolStripMenuItem->Name = L"âîïðîñûToolStripMenuItem";
@@ -202,42 +206,42 @@ namespace KursovayaGUI {
 			// ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem
 			// 
 			this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem->Name = L"ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem";
-			this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem->Size = System::Drawing::Size(643, 22);
+			this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem->Size = System::Drawing::Size(661, 22);
 			this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem->Text = L"Ñðåäíåå àðèôìåòè÷åñêîå óñïåøíûõ çàïóñêîâ\? ";
 			this->ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::ñðåäíååÀðèôìåòè÷åñêîåÓñïåøíûõÇàïóñêîâToolStripMenuItem_Click);
 			// 
 			// êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem
 			// 
 			this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem->Name = L"êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem";
-			this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem->Size = System::Drawing::Size(643, 22);
+			this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem->Size = System::Drawing::Size(661, 22);
 			this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem->Text = L"Êàêàÿ ñàìàÿ äåøåâàÿ ðàêåòà äëÿ çàïóñêà\? ";
 			this->êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::êàêàÿÑàìàÿÄåøåâàÿÐàêåòàÄëÿÇàïóñêàToolStripMenuItem_Click);
 			// 
 			// ðàçìàõÐÿäàÖåíûToolStripMenuItem
 			// 
 			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Name = L"ðàçìàõÐÿäàÖåíûToolStripMenuItem";
-			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Size = System::Drawing::Size(643, 22);
+			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Size = System::Drawing::Size(661, 22);
 			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Text = L"Ðàçìàõ ðÿäà öåíû";
 			this->ðàçìàõÐÿäàÖåíûToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::ðàçìàõÐÿäàÖåíûToolStripMenuItem_Click);
 			// 
 			// åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem
 			// 
 			this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem->Name = L"åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem";
-			this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem->Size = System::Drawing::Size(643, 22);
+			this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem->Size = System::Drawing::Size(661, 22);
 			this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem->Text = L"Åñòü ëè îäèíàêîâàÿ öåíà çàïóñêà ó ðàçíûõ êîìïàíèé\?";
 			this->åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::åñòüËèÎäèíàêîâàÿÖåíàÇàïóñêàÓÐàçíûõÊîìïàíèéToolStripMenuItem_Click);
 			// 
 			// àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem
 			// 
 			this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem->Name = L"àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem";
-			this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem->Size = System::Drawing::Size(643, 22);
+			this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem->Size = System::Drawing::Size(661, 22);
 			this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem->Text = L"Àëôàâèòíûé ñïèñîê âñåõ êîìïàíèé";
 			this->àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::àëôàâèòíûéÑïèñîêÂñåõÊîìïàíèéToolStripMenuItem_Click);
 			// 
 			// äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem
 			// 
 			this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem->Name = L"äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem";
-			this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem->Size = System::Drawing::Size(643, 22);
+			this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem->Size = System::Drawing::Size(661, 22);
 			this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem->Text = L"Äèàãðàììà. Ïðîöåíòíîå ñîîòíîøåíèå âñåõ çàïóñêîâ êàæäîé êîìïàíèè";
 			this->äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::äèàãðàììàÏðîöåíòíîåÑîîòíîøåíèåÂñåõÇàïóñêîâÊàæäîéÊîìïàíèèToolStripMenuItem_Click);
 			// 
@@ -352,6 +356,13 @@ namespace KursovayaGUI {
 			this->openFileDialog1->FileName = L"SpaceCompanies";
 			this->openFileDialog1->Filter = L"Data Files (*.dat) | *.dat";
 			this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::openFileDialog1_FileOk);
+			// 
+			// ÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem
+			// 
+			this->÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem->Name = L"÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem";
+			this->÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem->Size = System::Drawing::Size(661, 22);
+			this->÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem->Text = L"Êîëè÷åñòâî êîìïàíèé, ó êîòîðûõ ÷èñëî ïðîâàëüíûõ ïóñêîâ ìåíüøå ÷åì";
+			this->÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem_Click);
 			// 
 			// MyForm
 			// 
@@ -634,6 +645,26 @@ private: System::Void tabPage3_Paint(System::Object^ sender, System::Windows::Fo
 	}
 }
 private: System::Void openFileDialog1_FileOk(System::Object^ sender, System::ComponentModel::CancelEventArgs^ e) {
+}
+private: System::Void ÷èñëîÊîìïàíèéÓÊîòîðûõ×èñëîÏðîâàëüíûõÏóñêîâÌåíüøå×åìToolStripMenuItem_Click(System::Object^ sender,
+	System::EventArgs^ e) {
+	MyForm2^ form2 = gcnew MyForm2();
+	form2->ShowDialog();
+	
+	int failureFlights = System::Convert::ToInt32(form2->a);
+	int counter = 0;
+
+	for (int i = 0; i < NC; i++) 
+		if (companies[i].failureFlights < failureFlights)
+			counter++;
+	
+	char answer[20];
+	char title[100];
+	sprintf(answer, "%d", counter);
+	sprintf(title, "Êîë-âî êîìïàíèé, ÷èñëî ïðîâàëüíûõ ïóñêîâ ìåíüøå, ÷åì %d", failureFlights);
+	String^ sAnswer = gcnew String(answer);
+	String^ sTitle = gcnew String(title);
+	MessageBox::Show(sAnswer, sTitle, MessageBoxButtons::OK, MessageBoxIcon::Information);
 }
 };
 }
